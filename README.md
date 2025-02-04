@@ -1,1 +1,3 @@
 # MySchoolTestRepo
+
+print('Hello, world')
