@@ -18,5 +18,28 @@ RESOURCE_DATA_SCHEMA = {
         "year": {"type": "number"},
         "color": {"type": "string"},
         "pantone_value": {"type": "string"},
-    }
+    },
+    "requered": ["id", "name", "year", "color", "pantone_value"]
+}
+
+CREATED_USER_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "name": {"type": "string"},
+        "job": {"type": "string"},
+        "id": {"type": "string"},
+        "createdAt": {"type": "string"}
+    },
+    "requered": ["id", "name", "job", "createdAt"]
+}
+
+
+UPDATE_USER_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "name": {"type": "string"},
+        "job": {"type": "string"},
+        "updatedAt": {"type": "string"}
+    },
+    "requered": ["name", "job", "updatedAt"]
 }
