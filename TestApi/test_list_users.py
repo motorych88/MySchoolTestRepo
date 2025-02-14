@@ -3,6 +3,7 @@ from jsonschema import validate
 from Core.Contracts import USER_DATA_SCHEMA
 import allure
 
+
 URL = 'https://reqres.in/'
 LIST_USERS = 'api/users?page=2'
 EMAIL_ENDS = '@reqres.in'
@@ -37,6 +38,7 @@ def test_single_user():
     with allure.step('Проверяем статус код'):
         assert response.status_code == 200
     data = response.json()['data']
+    validate(data, USER_DATA_SCHEMA)
     with allure.step('Проверяем окончание email'):
         assert data['email'].endswith(EMAIL_ENDS)
     with allure.step('Проверяем, что id есть в поле "avatar"'):
