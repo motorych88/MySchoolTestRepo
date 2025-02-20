@@ -33,8 +33,10 @@ def test_single_resource():
     with allure.step('Проверяем статус код'):
         assert response.status_code == 200
     data = response.json()['data']
+    validate(data, RESOURCE_DATA_SCHEMA)
     with allure.step('Проверяем, что поле "color" начинается с #'):
         assert data['color'].startswith('#')
+
 
 @allure.suite('Проверка запросов ресурса')
 @allure.title('Проверяем получение, если ресурса не существует')
