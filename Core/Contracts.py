@@ -44,7 +44,7 @@ UPDATE_USER_SCHEMA = {
     "required": ["name", "job", "updatedAt"]
 }
 
-REGISTER_SCHEMA = {
+REGISTER_SUCCEFUL_SCHEMA = {
     "type": "object",
     "properties": {
         "id": {"type": "number"},
@@ -52,3 +52,20 @@ REGISTER_SCHEMA = {
     },
     "required": ["id", "token"]
 }
+
+REGISTER_UNSUCCEFUL_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "error": {"type": "string"}
+    },
+    "required": ["error"]
+}
+
+LOGIN_SUCCEFUL_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "token": {"type": "string"}
+    },
+    "required": ["token"]
+}
+

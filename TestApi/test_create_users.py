@@ -3,7 +3,6 @@ from jsonschema import validate
 import allure
 from Core.Contracts import CREATED_USER_SCHEMA, UPDATE_USER_SCHEMA
 import datetime
-from Core.api_endpoints import URL
 
 URL = 'https://reqres.in/'
 CREATE = 'api/users'
@@ -56,7 +55,8 @@ def test_update_put_user():
 @allure.title('Проверка редактирования юзера методом PATCH')
 def test_update_patch_user():
     body = {
-        "name": "morpheus"
+        "name": "morpheus",
+        "job": "zion resident"
     }
     with allure.step(f'Делаем запрос по адресу {URL + UPDATE}'):
         response = httpx.patch(URL + UPDATE, json=body)
@@ -69,6 +69,7 @@ def test_update_patch_user():
         assert response.json()['name'] == body['name']
     with allure.step('Проверяем, что дата в ответе правильная'):
         assert updated_date[0:16] == current_date[0:16]
+    print(response.json())
 
 
 @allure.suite('Работа с Юзерами')
