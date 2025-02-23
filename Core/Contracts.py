@@ -60,7 +60,7 @@ ERROR_SCHEMA = {
     "required": ["error"]
 }
 
-LOGIN_SUCCEFUL_SCHEMA = {
+LOGIN_SUCCESSFUL_SCHEMA = {
     "type": "object",
     "properties": {
         "token": {"type": "string"}

@@ -5,7 +5,7 @@ import pytest
 from jsonschema import validate
 import allure
 
-from Core.Contracts import REGISTER_SUCCEFUL_SCHEMA, ERROR_SCHEMA, LOGIN_SUCCEFUL_SCHEMA
+from Core.Contracts import REGISTER_SUCCEFUL_SCHEMA, ERROR_SCHEMA, LOGIN_SUCCESSFUL_SCHEMA
 
 URL = 'https://reqres.in/'
 REGISTER = 'api/register'
@@ -18,7 +18,7 @@ users_data = json.load(json_file)
 @allure.suite('Регистрация / Авторизация')
 @allure.title('Успешная регистрация')
 @pytest.mark.parametrize('users_data', users_data)
-def test_register_succeful(users_data):
+def test_register_successfull(users_data):
     with allure.step(f'Делаем запрос по адресу {URL + REGISTER}'):
         response = httpx.post(URL + REGISTER, json=users_data)
     with allure.step('Проверяем статус код'):
@@ -28,7 +28,7 @@ def test_register_succeful(users_data):
 
 @allure.suite('Регистрация / Авторизация')
 @allure.title('Регистрация без поля пароль')
-def test_register_unsucceful_no_password():
+def test_register_unsuccessfull_no_password():
     body = {
         "email": "byron.fields@reqres.in"
     }
@@ -41,7 +41,7 @@ def test_register_unsucceful_no_password():
 
 @allure.suite('Регистрация / Авторизация')
 @allure.title('Регистрация без поля почты')
-def test_register_unsucceful_no_email():
+def test_register_unsuccessfull_no_email():
     body = {
         "password": "pistol"
     }
@@ -55,17 +55,17 @@ def test_register_unsucceful_no_email():
 @allure.suite('Регистрация / Авторизация')
 @allure.title('Успешная авторизация')
 @pytest.mark.parametrize('users_data', users_data)
-def test_login_succeful(users_data):
+def test_login_successfull(users_data):
     with allure.step(f'Делаем запрос по адресу {URL + LOGIN}'):
         response = httpx.post(URL + LOGIN, json=users_data)
     with allure.step('Проверяем статус код'):
         assert response.status_code == 200
-    validate(response.json(), LOGIN_SUCCEFUL_SCHEMA)
+    validate(response.json(), LOGIN_SUCCESSFUL_SCHEMA)
 
 
 @allure.suite('Регистрация / Авторизация')
 @allure.title('Авторизация без поля пароль')
-def test_login_unsucceful_no_password():
+def test_login_unsuccessfull_no_password():
     body = {
         "email": "peter@klaven"
     }
@@ -78,7 +78,7 @@ def test_login_unsucceful_no_password():
 
 @allure.suite('Регистрация / Авторизация')
 @allure.title('Авторизация без поля почты')
-def test_login_unsucceful_no_email():
+def test_login_unsuccessfull_no_email():
     body = {
         "password": "pistol"
     }
