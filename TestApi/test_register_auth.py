@@ -5,7 +5,7 @@ import pytest
 from jsonschema import validate
 import allure
 
-from Core.Contracts import REGISTER_SUCCEFUL_SCHEMA, ERROR_SCHEMA, LOGIN_SUCCESSFUL_SCHEMA
+from Core.Contracts import REGISTER_SUCCESSFUL_SCHEMA, ERROR_SCHEMA, LOGIN_SUCCESSFUL_SCHEMA
 
 URL = 'https://reqres.in/'
 REGISTER = 'api/register'
@@ -23,7 +23,7 @@ def test_register_successfull(users_data):
         response = httpx.post(URL + REGISTER, json=users_data)
     with allure.step('Проверяем статус код'):
         assert response.status_code == 200
-    validate(response.json(), REGISTER_SUCCEFUL_SCHEMA)
+    validate(response.json(), REGISTER_SUCCESSFUL_SCHEMA)
 
 
 @allure.suite('Регистрация / Авторизация')

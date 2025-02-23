@@ -43,7 +43,7 @@ UPDATE_USER_SCHEMA = {
     "required": ["name", "job", "updatedAt"]
 }
 
-REGISTER_SUCCEFUL_SCHEMA = {
+REGISTER_SUCCESSFUL_SCHEMA = {
     "type": "object",
     "properties": {
         "id": {"type": "number"},
