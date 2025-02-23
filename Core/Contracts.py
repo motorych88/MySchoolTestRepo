@@ -33,7 +33,6 @@ CREATED_USER_SCHEMA = {
     "required": ["id", "name", "job", "createdAt"]
 }
 
-
 UPDATE_USER_SCHEMA = {
     "type": "object",
     "properties": {
@@ -53,7 +52,7 @@ REGISTER_SUCCEFUL_SCHEMA = {
     "required": ["id", "token"]
 }
 
-REGISTER_UNSUCCEFUL_SCHEMA = {
+ERROR_SCHEMA = {
     "type": "object",
     "properties": {
         "error": {"type": "string"}
@@ -68,4 +67,3 @@ LOGIN_SUCCEFUL_SCHEMA = {
     },
     "required": ["token"]
 }
-

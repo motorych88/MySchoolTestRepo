@@ -10,6 +10,7 @@ EMAIL_ENDS = '@reqres.in'
 AVATAR_ENDS = '-image.jpg'
 SINGLE_USER = 'api/users/2'
 NOT_FOUND = 'api/users/23'
+DELAYED_RESPONSE = 'api/users?delay=3'
 
 
 @allure.suite('Проверка запросов данных пользователей')
@@ -52,3 +53,22 @@ def test_not_found():
         response = httpx.get(URL + NOT_FOUND)
     with allure.step('Проверяем статус код'):
         assert response.status_code == 404
+
+
+
+@allure.suite('Проверка запросов данных пользователей')
+@allure.title('Проверяем получение списка пользователей + TimeOut')
+def test_list_users():
+    with allure.step(f'Делаем запрос по адресу {URL + DELAYED_RESPONSE}'):
+        response = httpx.get(URL + DELAYED_RESPONSE, timeout=4)
+    with allure.step('Проверяем статус код'):
+        assert response.status_code == 200
+    data = response.json()['data']
+
+    for item in data:
+        with allure.step(f'Проверяем элемент из списка'):
+            validate(item, USER_DATA_SCHEMA)
+            with allure.step('Проверяем окончание email'):
+                assert item['email'].endswith(EMAIL_ENDS)
+            with allure.step('Проверяем, что id есть в поле "avatar"'):
+                assert item['avatar'].endswith(str(item['id']) + AVATAR_ENDS)

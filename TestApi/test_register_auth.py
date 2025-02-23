@@ -5,7 +5,7 @@ import pytest
 from jsonschema import validate
 import allure
 
-from Core.Contracts import REGISTER_SUCCEFUL_SCHEMA, REGISTER_UNSUCCEFUL_SCHEMA, LOGIN_SUCCEFUL_SCHEMA
+from Core.Contracts import REGISTER_SUCCEFUL_SCHEMA, ERROR_SCHEMA, LOGIN_SUCCEFUL_SCHEMA
 
 URL = 'https://reqres.in/'
 REGISTER = 'api/register'
@@ -26,7 +26,6 @@ def test_register_succeful(users_data):
     validate(response.json(), REGISTER_SUCCEFUL_SCHEMA)
 
 
-
 @allure.suite('Регистрация / Авторизация')
 @allure.title('Регистрация без поля пароль')
 def test_register_unsucceful_no_password():
@@ -37,8 +36,7 @@ def test_register_unsucceful_no_password():
         response = httpx.post(URL + REGISTER, json=body)
     with allure.step('Проверяем статус код'):
         assert response.status_code == 400
-    validate(response.json(), REGISTER_UNSUCCEFUL_SCHEMA)
-
+    validate(response.json(), ERROR_SCHEMA)
 
 
 @allure.suite('Регистрация / Авторизация')
@@ -51,8 +49,7 @@ def test_register_unsucceful_no_email():
         response = httpx.post(URL + REGISTER, json=body)
     with allure.step('Проверяем статус код'):
         assert response.status_code == 400
-    validate(response.json(), REGISTER_UNSUCCEFUL_SCHEMA)
-
+    validate(response.json(), ERROR_SCHEMA)
 
 
 @allure.suite('Регистрация / Авторизация')
@@ -64,3 +61,29 @@ def test_login_succeful(users_data):
     with allure.step('Проверяем статус код'):
         assert response.status_code == 200
     validate(response.json(), LOGIN_SUCCEFUL_SCHEMA)
+
+
+@allure.suite('Регистрация / Авторизация')
+@allure.title('Авторизация без поля пароль')
+def test_login_unsucceful_no_password():
+    body = {
+        "email": "peter@klaven"
+    }
+    with allure.step(f'Делаем запрос по адресу {URL + LOGIN}'):
+        response = httpx.post(URL + LOGIN, json=body)
+    with allure.step('Проверяем статус код'):
+        assert response.status_code == 400
+    validate(response.json(), ERROR_SCHEMA)
+
+
+@allure.suite('Регистрация / Авторизация')
+@allure.title('Авторизация без поля почты')
+def test_login_unsucceful_no_email():
+    body = {
+        "password": "pistol"
+    }
+    with allure.step(f'Делаем запрос по адресу {URL + LOGIN}'):
+        response = httpx.post(URL + LOGIN, json=body)
+    with allure.step('Проверяем статус код'):
+        assert response.status_code == 400
+    validate(response.json(), ERROR_SCHEMA)
